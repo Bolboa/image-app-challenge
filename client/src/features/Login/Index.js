@@ -13,8 +13,8 @@ class Login extends Component {
   componentDidMount = () => {
 
     const query = qs.stringify({
-      client_id: "d7b9470d972b5cf98fc7",
-      redirect_uri: "http://localhost:8080/auth",
+      client_id: process.env.CLIENT_ID,
+      redirect_uri: process.env.REDIRECT_URI + "/auth",
       state: random_string.generate()
     });
 
