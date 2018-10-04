@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-
-
+import Cookies from "js-cookie";
 import API from "../../utils/API";
 
 
@@ -11,8 +10,9 @@ class Verify extends Component {
   }
 
   componentDidMount = () => {
-    
-    const access_token = this.props.location.search.split("=")[1];
+
+    const access_code = this.props.location.search.split("&")[0].split("=")[1];
+    const csrf_string = Cookies.get("csrf_string")
 
     // Define the headers.
     let headers = new Headers();
@@ -25,7 +25,7 @@ class Verify extends Component {
     // Define the route.
     api.create_entity({ name: "auth" }, headers);
 
-    api.endpoints.auth.create({ data: access_token })
+    api.endpoints.auth.create({ data: { code: access_code, csrf: csrf_string } })
       .then(response => response.json())
       .then(json_response => {
         console.log(json_response);

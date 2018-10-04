@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-
-const qs = require("query-string");
-const random_string = require("randomstring");
+import Cookies from "js-cookie";
+import qs from "query-string";
+import random_string from "randomstring";
 
 
 class Login extends Component {
@@ -12,10 +12,15 @@ class Login extends Component {
 
   componentDidMount = () => {
 
+    const csrf_string = random_string.generate();
+
+    Cookies.set("csrf_string", csrf_string);
+
     const query = qs.stringify({
       client_id: process.env.CLIENT_ID,
       redirect_uri: process.env.REDIRECT_URI + "/auth",
-      state: random_string.generate()
+      state: csrf_string,
+      scope: "user:email"
     });
 
     window.location = "https://github.com/login/oauth/authorize?" + query;

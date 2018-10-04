@@ -41,9 +41,11 @@ module.exports = {
       template: "./src/Index.html"
     }),
     new webpack.DefinePlugin({
-    	"process.env": {
-        API_URL: JSON.stringify(process.env.API_URL)
+      "process.env": {
+        API_URL: JSON.stringify(process.env.API_URL),
+        REDIRECT_URI: JSON.stringify(process.env.REDIRECT_URI),
+        CLIENT_ID: JSON.stringify(process.env.CLIENT_ID)
       }
-  	})
+    })
   ]
 };
