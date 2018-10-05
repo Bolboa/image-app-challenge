@@ -1,4 +1,3 @@
-
 class API {
 
   constructor({ url }) {
@@ -10,11 +9,11 @@ class API {
   /*
   Create and store a single entity's endpoints.
   */
-  create_entity(entity, headers) {
+  create_entity = (entity, headers) => {
     this.endpoints[entity.name] = this.create_basic_CRUD_endpoints(entity, headers);
   }
     
-  create_entities(array_of_entities) {
+  create_entities = (array_of_entities) => {
     array_of_entities.forEach(this.create_entities.bind(this));
   }
     

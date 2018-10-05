@@ -8,13 +8,9 @@ Route for authentication a user via OAuth.
 */
 module.exports = { 
   method: "POST",
-  path: "/user/auth",
+  path: "/user/auth/verify",
   config: { 
     pre: [
-      {
-        method: oauth.access,
-        assign: "access"
-      },
       {
         method: user_info.user_details,
         assign: "user_details"

@@ -23,21 +23,25 @@ const access = async (req, h) => {
   // Authorize the user and get the access code.
   const response = await axios.post(url + query)
     .then(response => {
+      
+      // Extract the response and parse it.
+      access_token_response = qs.parse(response.data);
+      if (access_token_response.error) {
+        throw Boom.badRequest(access_token_response.error);
+      }
 
-      // Extract the access code and return it.
-      let access_token = qs.parse(response.data).access_token;
-      return access_token
+      return access_token_response.access_token;
 
     })
     .catch(err => {
       throw Boom.badRequest(err);
     });
-  
+
   return response;
 
 }
 
 
 module.exports = {
-  access: access
+  access: access,
 }
