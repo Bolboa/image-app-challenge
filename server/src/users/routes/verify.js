@@ -4,7 +4,7 @@ const create_user = require("../controllers/create_user");
 
 
 /*
-Route for authentication a user via OAuth.
+Route for verifying a user's access code.
 */
 module.exports = { 
   method: "POST",

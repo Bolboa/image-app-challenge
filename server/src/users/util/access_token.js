@@ -26,10 +26,14 @@ const access = async (req, h) => {
       
       // Extract the response and parse it.
       access_token_response = qs.parse(response.data);
+
+      // If the response contains an error,
+      // we throw the error.
       if (access_token_response.error) {
         throw Boom.badRequest(access_token_response.error);
       }
 
+      // Return the access token.
       return access_token_response.access_token;
 
     })
