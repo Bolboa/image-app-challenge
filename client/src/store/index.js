@@ -9,6 +9,7 @@ const persisted_state = new PersistedState();
 
 const store = createStore(
   rootReducer,
+  persisted_state.load_state(),
   applyMiddleware(thunk)
 );
 

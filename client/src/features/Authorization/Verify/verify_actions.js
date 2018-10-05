@@ -35,11 +35,11 @@ export const authorize = (access_code, csrf_string) => {
 
         }
         else {
+          
           // Successful request.
           dispatch(fetch_products_success(json_response));
+          
         }
-
-        
 
       })
       .catch(err => dispatch(fetch_products_failure(err)));

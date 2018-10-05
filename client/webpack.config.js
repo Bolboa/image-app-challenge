@@ -44,7 +44,8 @@ module.exports = {
       "process.env": {
         API_URL: JSON.stringify(process.env.API_URL),
         REDIRECT_URI: JSON.stringify(process.env.REDIRECT_URI),
-        CLIENT_ID: JSON.stringify(process.env.CLIENT_ID)
+        CLIENT_ID: JSON.stringify(process.env.CLIENT_ID),
+        PIXABAY_API_KEY: JSON.stringify(process.env.PIXABAY_API_KEY)
       }
     })
   ]

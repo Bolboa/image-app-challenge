@@ -18,7 +18,7 @@ const access = async (req, h) => {
     code: req.payload.code,
     redirect_uri: process.env.REDIRECT_URI + "/auth",
     state: req.payload.csrf
-  })
+  });
 
   // Authorize the user and get the access code.
   const response = await axios.post(url + query)
