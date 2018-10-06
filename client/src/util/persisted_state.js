@@ -38,15 +38,15 @@ class PersistedState {
   save_state = (state) => {
     
     try {
-
-      // Save the state into local storage.
+      
+      // Save state to local storage.
       localStorage.setItem(process.env.REDIRECT_URI + ":state", JSON.stringify(state));
 
     } catch (err) {};
 
   }
 
-  
+
   /*
   Returns an empty state which tells the store
   to return the default states from the reducers.

@@ -1,7 +1,7 @@
 /*
 Authorize a user and get an access code.
 */
-export const images = () => {
+export const images = (page) => {
 
   // Define the headers.
   let headers = new Headers();
@@ -13,7 +13,7 @@ export const images = () => {
     dispatch(fetch_images_begin());
 
     // Get images.
-    fetch("https://pixabay.com/api/?key=" + process.env.PIXABAY_API_KEY, {
+    return fetch("https://pixabay.com/api/?key=" + process.env.PIXABAY_API_KEY + "&page=" + String(page), {
       method: "GET",
       headers: headers
     }).then(response => response.json())
@@ -29,12 +29,12 @@ export const images = () => {
         else {
 
           // Successful request.
-          dispatch(fetch_images_success(json_response));
+          dispatch(fetch_images_success(json_response, page));
 
         }
 
       })
-      .catch(err => dispatch(fetch_products_failure(err)));
+      .catch(err => dispatch(fetch_images_failure(err)));
 
   }
   
@@ -51,9 +51,9 @@ export const fetch_images_begin = () => ({
 /*
 Request is successful.
 */
-export const fetch_images_success = data => ({
+export const fetch_images_success = (data, page) => ({
   type: "FETCH_IMAGES_SUCCESS",
-  payload: data
+  payload: { data: data, page: page }
 });
 
 /*
@@ -63,3 +63,27 @@ export const fetch_images_failure = err => ({
   type: "FETCH_IMAGES_FAILURE",
   payload: err
 });
+
+
+
+/*
+Delete the images saved in local storage.
+*/
+export const reset_images = () => {
+
+  return dispatch => {
+
+    // Returning a promise allows the action creator to be used as
+    // a promise.
+    return new Promise((resolve, reject) => {
+      
+      dispatch({
+        type: "RESET_IMAGES"
+      });
+
+      resolve();
+
+    });
+  }
+  
+}
