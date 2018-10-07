@@ -18,4 +18,4 @@ module.exports = {
     auth: false,
     handler: profile.delete_image
   }
-}
+};

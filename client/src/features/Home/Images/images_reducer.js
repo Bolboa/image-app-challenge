@@ -29,7 +29,7 @@ const fetch_images = (state = initial_state, action) => {
         loading: false,
         images: [...state.images, ...action.payload.data.hits],
         error: null
-      }
+      };
     
     
     case "FETCH_IMAGES_FAILURE":
@@ -39,7 +39,7 @@ const fetch_images = (state = initial_state, action) => {
         loading: false,
         images: [],
         error: action.payload
-      }
+      };
 
 
     case "RESET_IMAGES":
@@ -62,7 +62,7 @@ const fetch_images = (state = initial_state, action) => {
         loading: false,
         images: [],
         error: null
-      }
+      };
 
       
     default:

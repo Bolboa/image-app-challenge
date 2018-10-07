@@ -37,7 +37,7 @@ export const save_image = (image, access_token) => {
 
       })
       .catch(err => {
-        console.log(err);
+
         // Failed to save image.
         dispatch(save_image_failure(err));
 
@@ -46,8 +46,8 @@ export const save_image = (image, access_token) => {
 
       });
 
-  }
-}
+  };
+};
 
 
 /*
@@ -123,8 +123,8 @@ export const load_user_images = (access_token, user_id) => {
       })
       .catch(err => dispatch(load_images_failure(err)));
 
-  }
-}
+  };
+};
 
 
 /*
@@ -202,8 +202,8 @@ export const delete_user_image = (image, access_token) => {
 
       });
 
-  }
-}
+  };
+};
 
 
 /*

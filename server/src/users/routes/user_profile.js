@@ -19,4 +19,4 @@ module.exports = {
     auth: false,
     handler: profile.load_images
   }
-}
+};

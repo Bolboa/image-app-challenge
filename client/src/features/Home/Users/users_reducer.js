@@ -15,7 +15,7 @@ const users_list = (state = initial_state, action) => {
         ...state,
         loading: true,
         error: null
-      }
+      };
   
   
     case "LOAD_USERS_SUCCESS": 
@@ -24,7 +24,7 @@ const users_list = (state = initial_state, action) => {
         ...state,
         loading: false,
         users: [...action.payload.users]
-      }
+      };
   
       
     case "LOAD_USERS_FAILURE":
@@ -33,13 +33,13 @@ const users_list = (state = initial_state, action) => {
         ...state,
         loading: false,
         error: action.payload
-      }
+      };
         
       
     default:
       return state;
         
   }
-}
+};
   
 export default users_list;

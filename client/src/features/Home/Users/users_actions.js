@@ -1,5 +1,6 @@
 import qs from "query-string";
 import API from "../../../util/API";
+import { fetch_products_failure } from "../../../actions/global_actions";
 
 
 /*
@@ -50,10 +51,13 @@ export const users_id_list = (access_token, user_id) => {
         }
 
       })
-      .catch(err => dispatch(load_users_failure(err)));
+      .catch(err => {
+        dispatch(load_users_failure(err));
+        dispatch(fetch_products_failure(err));
+      });
 
-  }
-}
+  };
+};
 
 /*
 GET request to get all users has been called.

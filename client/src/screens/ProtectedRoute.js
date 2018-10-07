@@ -27,7 +27,7 @@ class ConnectedProtectedRoute extends Component {
           <Redirect from="/app" to="/login" />
         )}
       />
-    )
+    );
   }
 }
 

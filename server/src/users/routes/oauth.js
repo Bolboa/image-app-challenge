@@ -23,4 +23,4 @@ module.exports = {
     auth: false,
     handler: create_user.create
   }
-}
+};
