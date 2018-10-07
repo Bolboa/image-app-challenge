@@ -9,12 +9,26 @@ exports.user_details = async (req, h) => {
 
   // Check for an access code being passed down from a pre-handler or get it from
   // the main handler itself.
-  const access_code = (typeof req.pre.access === "undefined") ? req.payload : req.pre.access;
+  //const access_token = req.payload;
+
+  let access_token;
+
+  // Check if access token was passed as a POST request.
+  if (req.payload && req.payload.access_token) {
+    access_token = req.payload.access_token;
+  }
+  else {
+
+    // Check if the access token was newly created by a prior pre-handler or if
+    // it was passed as a query parameter.
+    access_token = (typeof req.pre.access === "undefined") ? req.query.access_token : req.pre.access;
+
+  }  
 
   // Request to get all emails associated with the user's Github account.
   const user = await axios.get("https://api.github.com/user", {
     headers: {
-      Authorization: "token " + access_code,
+      Authorization: "token " + access_token,
       "User-Agent": "Login-App"
     }
   })
@@ -32,7 +46,7 @@ exports.user_details = async (req, h) => {
   // their access token.
   return {
     user: user,
-    access_token: access_code
+    access_token: access_token
   };
 
 }

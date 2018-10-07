@@ -1,14 +1,14 @@
 const user_info = require("../controllers/user_info");
-const create_user = require("../controllers/create_user");
+const profiles = require("../controllers/profiles");
 
 
 
 /*
-Route for verifying a user's access code.
+Route for retrieving all images associated with a user's profile.
 */
 module.exports = { 
   method: "GET",
-  path: "/user/auth/verify",
+  path: "/users/profiles",
   config: { 
     pre: [
       {
@@ -17,6 +17,6 @@ module.exports = {
       }
     ],
     auth: false,
-    handler: create_user.create
+    handler: profiles.get_all
   }
 }

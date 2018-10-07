@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Cookies from "js-cookie";
 import qs from "query-string";
 import random_string from "randomstring";
-import { verify_token } from "./login_actions";
+import { verify_token } from "../../../actions/global_actions";
 
 
 const mapStateToProps = state => {
@@ -36,9 +36,13 @@ class ConnectedLogin extends Component {
         // Send the user to the main page if the access token
         // is still valid.
         if (this.props.fetch_user_details.is_authorized) {
-          this.props.history.push("/home");
+          
+          // The home page needs to be refreshed when visited
+          // because of the infinite scroll functionality.
+          window.location = process.env.REDIRECT_URI + "/home";
+
         }
-        
+
       });
 
   }
@@ -74,7 +78,9 @@ class ConnectedLogin extends Component {
   render() {
 
     return (
+
       <button onClick={ () => this.login() }>Login with Github</button>
+      
     );
   }
 }

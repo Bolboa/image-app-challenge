@@ -6,6 +6,7 @@ const initial_state = {
   loading: false,
   first_name: "",
   last_name: "",
+  user_id: null,
   error: null
 };
 
@@ -33,6 +34,7 @@ const fetch_user_details = (state = initial_state, action) => {
         loading: false,
         first_name: action.payload.first_name,
         last_name: action.payload.last_name,
+        user_id: action.payload.user_id,
         error: null
       }
     
@@ -58,7 +60,8 @@ const fetch_user_details = (state = initial_state, action) => {
         loading: false,
         error: action.payload,
         first_name: "",
-        last_name: ""
+        last_name: "",
+        user_id: null
       }
     
     

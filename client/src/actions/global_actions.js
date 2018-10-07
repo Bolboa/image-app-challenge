@@ -1,4 +1,5 @@
-import API from "../../../util/API";
+import qs from "query-string";
+import API from "../util/API";
 
 
 /*
@@ -13,7 +14,7 @@ export const verify_token = (access_token) => {
   let headers = new Headers();
   headers.append("Content-Type", "application/json");
   headers.append("Accept", "application/json");
-
+  
   // Define the route.
   api.create_entity({ name: "verify" }, headers);
 
@@ -22,8 +23,13 @@ export const verify_token = (access_token) => {
     // Request is in process.
     dispatch(fetch_products_begin());
 
+    // Define query parameters.
+    const query = qs.stringify({
+      access_token: access_token
+    });
+
     // Get the user details.
-    return api.endpoints.verify.create({ data: access_token })
+    return api.endpoints.verify.get_one({id: query})
       .then(response => response.json())
       .then(json_response => {
 
@@ -43,10 +49,9 @@ export const verify_token = (access_token) => {
 
       })
       .catch(err => dispatch(fetch_products_failure(err)));
-      
+
   }
 }
-
 
 /*
 Request is in process.

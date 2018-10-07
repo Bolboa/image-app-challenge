@@ -2,19 +2,22 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { images, reset_images } from "./images_actions";
 import ImagesList from "./ImagesListView";
+import Cookies from "js-cookie";
+import { verify_token } from "../../../actions/global_actions";
 
 
 const mapStateToProps = state => {
   return { 
     fetch_user_details: state.fetch_user_details,
-    fetch_images: state.fetch_images
+    fetch_images: state.fetch_images,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     images: (page) => dispatch(images(page)),
-    reset_images: () => dispatch(reset_images())
+    reset_images: () => dispatch(reset_images()),
+    verify_token: (access_token) => dispatch(verify_token(access_token)),
   };
 }
 
@@ -24,13 +27,12 @@ class ConnectedImages extends Component {
   constructor(props) {
     super(props);
 
-    
     // Scroll to the top of the page
     // every time the page loads.
     // Also load in the first page.
     window.onload = () => {
       window.scrollTo(0,0);
-      this.props.images(1);
+      this.props.images(1);      
     }
 
     // Load another page every time we reach the bottom
@@ -41,8 +43,8 @@ class ConnectedImages extends Component {
       if (window.innerHeight + document.documentElement.scrollTop 
           === document.documentElement.offsetHeight) {
             
-            // Load the next page.
-            this.props.images(this.props.fetch_images.page);
+        // Load the next page.
+        this.props.images(this.props.fetch_images.page);
 
       }
     }
@@ -51,10 +53,16 @@ class ConnectedImages extends Component {
 
 
   componentDidMount = () => {
+
+    // Get access token.
+    const access_token = Cookies.get("access_token");
+    
+    // Access token is verified.
+    this.props.verify_token(access_token);
     
     // Clear the saved images in the persisted state.
     this.props.reset_images();
-    
+
   }
 
 
@@ -76,7 +84,10 @@ class ConnectedImages extends Component {
     
     return (
       
-      <ImagesList live_images={ live_images } />
+      <ImagesList 
+        access_token={ Cookies.get("access_token") } 
+        live_images={ live_images } 
+      />
 
     );
   }

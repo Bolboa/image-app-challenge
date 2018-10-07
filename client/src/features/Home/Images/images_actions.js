@@ -1,3 +1,6 @@
+import { fetch_products_failure } from "../../../actions/global_actions";
+
+
 /*
 Authorize a user and get an access code.
 */
@@ -25,6 +28,9 @@ export const images = (page) => {
           // Request failed.
           dispatch(fetch_images_failure(json_response.message));
 
+          // Unauthenticate the user.
+          dispatch(fetch_products_failure(json_response.message));
+        
         }
         else {
 
@@ -34,7 +40,15 @@ export const images = (page) => {
         }
 
       })
-      .catch(err => dispatch(fetch_images_failure(err)));
+      .catch(err => {
+
+        // Failed to retrieve images.
+        dispatch(fetch_images_failure(err));
+
+        // Unauthenticate the user.
+        dispatch(fetch_products_failure(err));
+
+      });
 
   }
   
@@ -42,14 +56,14 @@ export const images = (page) => {
 
 
 /*
-Request is in process.
+GET request for images from Pixabay API has been called.
 */
 export const fetch_images_begin = () => ({
   type: "FETCH_IMAGES_BEGIN"
 });
 
 /*
-Request is successful.
+GET request for images from Pixabay API was successful.
 */
 export const fetch_images_success = (data, page) => ({
   type: "FETCH_IMAGES_SUCCESS",
@@ -57,13 +71,12 @@ export const fetch_images_success = (data, page) => ({
 });
 
 /*
-Request failed.
+GET request for images from Pixabay API failed.
 */
 export const fetch_images_failure = err => ({
   type: "FETCH_IMAGES_FAILURE",
   payload: err
 });
-
 
 
 /*

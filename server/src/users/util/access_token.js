@@ -15,9 +15,9 @@ const access = async (req, h) => {
   const query = qs.stringify({
     client_id: process.env.CLIENT_ID,
     client_secret: process.env.CLIENT_SECRET,
-    code: req.payload.code,
+    code: req.query.access_code,
     redirect_uri: process.env.REDIRECT_URI + "/auth",
-    state: req.payload.csrf
+    state: req.query.csrf
   });
 
   // Authorize the user and get the access code.

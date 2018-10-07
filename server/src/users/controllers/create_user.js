@@ -1,6 +1,5 @@
-const axios = require("axios");
-const qs = require("querystring");
 const User = require("../models/User.js");
+const Boom = require("boom");
 
 
 /*
@@ -8,8 +7,15 @@ Create a new user or get the user from the database.
 */
 exports.create = async (req, h) => {
 
-  // Split name into first name and last name.
-  const full_name = req.pre.user_details.user.data.name.split(" ");
+  if (!req.pre.user_details.user.data.name) {
+    full_name = [req.pre.user_details.user.data.login, ""];
+  }
+  else {
+    
+    // Split name into first name and last name.
+    full_name = req.pre.user_details.user.data.name.split(" ");
+    
+  }
 
   // Github ID.
   const github_id = req.pre.user_details.user.data.id;
@@ -39,6 +45,7 @@ exports.create = async (req, h) => {
   return h.response({
     first_name: user.first_name,
     last_name: user.last_name,
+    user_id: user.github_id,
     access_token: req.pre.user_details.access_token
   }).code(201);
 

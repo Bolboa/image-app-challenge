@@ -1,4 +1,6 @@
+import qs from "query-string";
 import API from "../../../util/API";
+import { fetch_products_failure } from "../../../actions/global_actions";
 
 
 /*
@@ -22,8 +24,14 @@ export const authorize = (access_code, csrf_string) => {
     // Request is in process.
     dispatch(fetch_products_begin());
 
+    // Define query parameters.
+    const query = qs.stringify({
+      access_code: access_code,
+      csrf: csrf_string
+    });
+
     // Get the user details.
-    return api.endpoints.auth.create({ data: { code: access_code, csrf: csrf_string } })
+    return api.endpoints.auth.get_one({ id: query })
       .then(response => response.json())
       .then(json_response => {
 
@@ -38,7 +46,7 @@ export const authorize = (access_code, csrf_string) => {
           
           // Successful request.
           dispatch(fetch_products_success(json_response));
-          
+
         }
 
       })
@@ -61,12 +69,4 @@ Request is successful.
 export const fetch_products_success = data => ({
   type: "FETCH_PRODUCTS_SUCCESS",
   payload: data
-});
-
-/*
-Request failed.
-*/
-export const fetch_products_failure = err => ({
-  type: "FETCH_PRODUCTS_FAILURE",
-  payload: err
 });

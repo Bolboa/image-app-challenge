@@ -1,10 +1,11 @@
 import PersistedState from "../../../util/persisted_state";
 
+
 const initial_state = {
   page: 0,
   loading: false,
   images: [],
-  error: null
+  error: null,
 };
 
 
@@ -21,8 +22,6 @@ const fetch_images = (state = initial_state, action) => {
     
     
     case "FETCH_IMAGES_SUCCESS":
-      //console.log(...state.images);
-
       
       return {
         ...state,
@@ -42,12 +41,19 @@ const fetch_images = (state = initial_state, action) => {
         error: action.payload
       }
 
+
     case "RESET_IMAGES":
-      console.log("inside");
+
+      // Define the persisted state.
       const persisted_state = new PersistedState();
+
+      // Load saved images from local storage.
       const saved_images = persisted_state.load_state();
 
+      // Delete the images from local storage.
       const {["fetch_images"]: deleted, ...rest} = saved_images;
+
+      // Save the new state.
       persisted_state.save_state(rest);
 
       return {
@@ -57,8 +63,8 @@ const fetch_images = (state = initial_state, action) => {
         images: [],
         error: null
       }
-    
-    
+
+      
     default:
       return state;
       

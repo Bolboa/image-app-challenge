@@ -33,7 +33,7 @@ class API {
     });
         
     // Fetch a specific object.
-    endpoints.get_one = ({ id }) => fetch(`${resource_url}/${id}`, {
+    endpoints.get_one = ({ id }) => fetch(`${resource_url}?${id}`, {
       method: "GET",
       headers: headers
     });

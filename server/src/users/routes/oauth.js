@@ -7,18 +7,18 @@ const create_user = require("../controllers/create_user");
 Route for authentication a user via OAuth.
 */
 module.exports = { 
-  method: "POST",
+  method: "GET",
   path: "/user/auth",
   config: { 
     pre: [
-      {
+      [{
         method: oauth.access,
         assign: "access"
-      },
-      {
+      }],
+      [{
         method: user_info.user_details,
         assign: "user_details"
-      }
+      }]
     ],
     auth: false,
     handler: create_user.create

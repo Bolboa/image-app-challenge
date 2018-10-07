@@ -26,7 +26,7 @@ class ConnectedVerify extends Component {
 
     // Get authorization code from query parameter.
     const access_code = this.props.location.search.split("&")[0].split("=")[1];
-   
+
     // Unique string to ensure no one messed with the authorization. 
     const csrf_string = Cookies.get("csrf_string");
     
@@ -36,7 +36,11 @@ class ConnectedVerify extends Component {
 
         // Allow the user access to the main page if authorized.
         if (this.props.fetch_user_details.is_authorized) {
-          this.props.history.push("/home");
+          
+          // Reload the page to refresh the infinite scroll
+          // functionality on the home page.
+          window.location = process.env.REDIRECT_URI + "/home";
+          
         }
         else {
           
@@ -45,7 +49,7 @@ class ConnectedVerify extends Component {
           this.props.history.push("/login");
 
         }
-        
+
       });
     
   }
