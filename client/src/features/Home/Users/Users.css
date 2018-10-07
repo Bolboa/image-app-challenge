@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
+
+
+.external_users {
+  display: block;
+  position: fixed;
+  max-width: 200px;
+  width: 200px;
+  margin: 0;
+  text-align: center;
+  background: white;
+  border: solid 1px black;
+  top: 100px;
+  height: 100px;
+  overflow-y: auto;
+}
+
+.external {
+  font-family: "Montserrat", sans-serif;
+  cursor: pointer;
+  background: white;
+  margin: 0;
+  padding: 10px;
+  border: solid 1px #20939940;
+}
+
+.external:hover {
+  background: #20939940;
+}

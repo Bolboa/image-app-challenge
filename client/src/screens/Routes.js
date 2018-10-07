@@ -4,8 +4,8 @@ import Login from "../features/Authorization/Login/Index";
 import Verify from "../features/Authorization/Verify/Index";
 import Home from "./Home";
 import ProtectedRoute from "./ProtectedRoute";
-import Profile from "../features/Profile/User/Index";
-import User from "../features/ExternalUsers/User/Index"; 
+import Profile from "./Profile";
+import ExternalUser from "./ExternalUsers"; 
 
 
 const Main = () => (
@@ -24,7 +24,7 @@ const Main = () => (
       />
       <ProtectedRoute
         path="/users/:user"
-        component={ User }
+        component={ ExternalUser }
       />
     </Switch>
   </main>

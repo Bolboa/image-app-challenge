@@ -1,6 +1,7 @@
 import React from "react";
 import { save_image } from "../../Profile/User/profile_actions";
 import { connect } from "react-redux";
+import "../../../styles/Images.css";
 
 
 const mapStateToProps = state => {
@@ -18,10 +19,10 @@ const mapDispatchToProps = dispatch => {
 
 const ConnectedImagesList = ({ live_images, save_image, access_token }) => (
 
-  <div className="Images">
+  <div className="images">
     {
       live_images && live_images.map((image, i) => {
-        return <img onClick={ (e) => save_image(e.target.src, access_token) } className={ String(i) } key={ i } src={ image.largeImageURL } />;
+        return <img className="image" onClick={ (e) => save_image(e.target.src, access_token) } key={ i } src={ image.largeImageURL } />;
       })
     }
   </div>

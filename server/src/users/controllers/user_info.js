@@ -7,10 +7,6 @@ Route for getting the user's primary Github email.
 */
 exports.user_details = async (req, h) => {
 
-  // Check for an access code being passed down from a pre-handler or get it from
-  // the main handler itself.
-  //const access_token = req.payload;
-
   let access_token;
 
   // Check if access token was passed as a POST request.
@@ -24,6 +20,7 @@ exports.user_details = async (req, h) => {
     access_token = (typeof req.pre.access === "undefined") ? req.query.access_token : req.pre.access;
 
   }  
+
 
   // Request to get all emails associated with the user's Github account.
   const user = await axios.get("https://api.github.com/user", {

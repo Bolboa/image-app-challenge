@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import qs from "query-string";
 import random_string from "randomstring";
 import { verify_token } from "../../../actions/global_actions";
+import "./Login.css";
 
 
 const mapStateToProps = state => {
@@ -78,8 +79,10 @@ class ConnectedLogin extends Component {
   render() {
 
     return (
-
-      <button onClick={ () => this.login() }>Login with Github</button>
+      
+      <button className="login" onClick={ () => this.login() }>
+        Login with Github
+      </button>
       
     );
   }

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Users from  "../features/Home/Users/Index";
-import Images from "../features/Home/Images/Index";
+import User from "../features/ExternalUsers/User/Index";
 import "../styles/Menu.css";
 import "../styles/General.css";
 import { fetch_products_failure } from "../actions/global_actions";
@@ -9,7 +8,8 @@ import { fetch_products_failure } from "../actions/global_actions";
 
 const mapStateToProps = state => {
   return { 
-    fetch_user_details: state.fetch_user_details
+    fetch_user_details: state.fetch_user_details,
+    saved_images: state.saved_images
   };
 };
 
@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 
-class ConnectedHome extends Component {
+class ConnectedExternalUserProfile extends Component {
 
   constructor(props) {
     super(props);
@@ -28,9 +28,20 @@ class ConnectedHome extends Component {
 
 
   /*
+  Button that allows user to go to the home page.
+  */
+  click_handler_home = () => {
+
+    // Redirect to the home page.
+    window.location = process.env.REDIRECT_URI + "/home";
+
+  }
+
+
+  /*
   Button to allow user to view their own profile.
   */
-  click_handler = () => {
+  click_handler_profile = () => {
 
     // Go to user's profile and pass their ID as a query parameter.
     this.props.history.push("/profile/" + this.props.fetch_user_details.user_id);
@@ -43,17 +54,21 @@ class ConnectedHome extends Component {
     return (
       
       <div>
-        <p className="name">Home</p>
+        <p className="name">{ this.props.saved_images.name }</p>
         <div className="menu">
-          <button className="menu_btn" onClick={ () => this.click_handler() }>
+          <button className="menu_btn" onClick={ () => this.click_handler_home() }>
+            Home
+          </button>
+          <button className="menu_btn" onClick={ () => this.click_handler_profile() }>
             Profile
           </button>
           <button className="logout" onClick={ () => this.props.logout() }>
             Logout
           </button>
         </div>
-        <Users history={ this.props.history } />
-        <Images />
+        <User 
+          match={ this.props.match }
+        />
       </div>
       
     );
@@ -61,6 +76,6 @@ class ConnectedHome extends Component {
 }
 
 
-const Home = connect(mapStateToProps, mapDispatchToProps)(ConnectedHome);
+const ExternalUserProfile = connect(mapStateToProps, mapDispatchToProps)(ConnectedExternalUserProfile);
 
-export default Home;
+export default ExternalUserProfile;

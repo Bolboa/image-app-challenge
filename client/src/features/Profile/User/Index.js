@@ -1,20 +1,21 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Cookies from "js-cookie";
-import { load_user_images } from "../../Profile/User/profile_actions";
+import { load_user_images, delete_user_image } from "../../Profile/User/profile_actions";
 import ProfileImages from "./ProfileView";
 
 
 const mapStateToProps = state => {
+
   return { 
-    fetch_user_details: state.fetch_user_details,
-    saved_images: state.saved_images
+    fetch_user_details: state.fetch_user_details
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     load_user_images: (user_id, access_token) => dispatch(load_user_images(user_id, access_token)),
+    delete_user_image: (image, access_token) => dispatch(delete_user_image(image, access_token))
   };
 }
 
@@ -24,6 +25,7 @@ class ConnectedProfile extends Component {
   constructor(props) {
     super(props);
   }
+
 
   componentDidMount = () => {
     
@@ -39,24 +41,12 @@ class ConnectedProfile extends Component {
   }
 
 
-  /*
-  Button that allows user to go to the home page.
-  */
-  click_handler = () => {
-
-    // Redirect to the home page.
-    window.location = process.env.REDIRECT_URI + "/home";
-
-  }
-
-
   render() {
     
     return (
       
       <ProfileImages 
-        click_handler={ this.click_handler } 
-        saved_images={ this.props.saved_images } 
+        access_token={ Cookies.get("access_token") }
       />
       
     );

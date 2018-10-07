@@ -29,7 +29,7 @@ export const save_image = (image, access_token) => {
       .then(text_response => {
 
         // User's images updated successfully.
-        dispatch(save_image_success());
+        dispatch(save_image_success(image));
 
         // We just return the text response since we aren't using any
         // HTTPS protocols. This is to avoid CORS issues.
@@ -37,7 +37,7 @@ export const save_image = (image, access_token) => {
 
       })
       .catch(err => {
-
+        console.log(err);
         // Failed to save image.
         dispatch(save_image_failure(err));
 
@@ -147,4 +147,83 @@ GET request to retrieve all images from a user's account was a failure.
 */
 export const load_images_failure = () => ({
   type: "LOAD_IMAGES_FAILURE"
+});
+
+
+export const delete_user_image = (image, access_token) => {
+
+  // Define the REST API.
+  const api = new API({ url: process.env.API_URL + "/user/image" });
+
+  // Define the headers.
+  let headers = new Headers();
+  headers.append("Content-Type", "application/json");
+  headers.append("Accept", "application/json");
+
+  // Define the route.
+  api.create_entity({ name: "delete" }, headers);
+
+  return dispatch => {
+    
+    // Request is in process.
+    dispatch(delete_image_begin());
+
+    // Define query parameters.
+    const query = qs.stringify({
+      access_token: access_token,
+      image: image
+    });
+
+    // Get the user details.
+    return api.endpoints.delete.get_one({ id: query })
+      .then(response => response.json())
+      .then(json_response => {
+
+        // Check for 400 and 500 error codes.
+        if ([4,5].includes(json_response.statusCode / 100)) {
+
+          // Request failed.
+          dispatch(delete_images_failure(json_response.message));
+          dispatch(fetch_products_failure(json_response.message));
+
+        }
+        else {
+
+          // Successful request.
+          dispatch(delete_image_success(image));
+          
+        }
+
+      })
+      .catch(err => {
+
+        dispatch(delete_images_failure(err));
+        dispatch(fetch_products_failure(err));
+
+      });
+
+  }
+}
+
+
+/*
+Request to delete an image from a user's account has been called.
+*/
+export const delete_image_begin = () => ({
+  type: "DELETE_IMAGE_BEGIN"
+});
+
+/*
+Request to delete an image from a user's account was successful.
+*/
+export const delete_image_success = (response) => ({
+  type: "DELETE_IMAGE_SUCCESS",
+  payload: response
+});
+
+/*
+Request to delete an image from a user's account was a failure.
+*/
+export const delete_images_failure = () => ({
+  type: "DELETE_IMAGES_FAILURE"
 });
