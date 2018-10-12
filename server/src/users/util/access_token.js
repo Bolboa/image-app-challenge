@@ -25,7 +25,7 @@ const access = async (req, h) => {
     .then(response => {
       
       // Extract the response and parse it.
-      access_token_response = qs.parse(response.data);
+      let access_token_response = qs.parse(response.data);
 
       // If the response contains an error,
       // we throw the error.
