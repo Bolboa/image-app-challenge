@@ -47,5 +47,5 @@ const access = async (req, h) => {
 
 
 module.exports = {
-  access: access,
+  access: access
 }
